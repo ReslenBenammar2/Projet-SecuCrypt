@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscription - Projet de Cryptage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+      margin-bottom: 1.5rem;
+    }
+
+    .logo img {
+      max-width: 100px;
+      height: auto;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(145deg, #6a82fb, #fc5c7d);
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .login-link {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .login-link a {
+      color: #6a82fb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="secucrypt logo.jpg" alt="Logo du projet" />
+    </div>
+    <h2>Inscription</h2>
+    <form id="signupForm">
+      <input type="email" name="email" placeholder="Adresse e-mail" required />
+      <input type="password" name="password" placeholder="Mot de passe" required />
+      <button type="submit" class="btn">Créer un compte</button>
+    </form>
+    <div class="login-link">
+      Déjà un compte ? <a href="login.html">Se connecter</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = form.email.value.trim();
+      const password = form.password.value.trim();
+
+      if (!email || !password) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+
+        if (response.status === 201) {
+          window.location.href = 'login.html'; // Redirection vers page connexion après inscription
+        }
+
+      } catch (err) {
+        alert("Erreur lors de l'inscription. Vérifiez que le serveur est bien lancé.");
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+

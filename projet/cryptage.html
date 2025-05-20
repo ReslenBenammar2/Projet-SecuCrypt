@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypter des données - Projet de Cryptage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    textarea, input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+    }
+
+      textarea {
+      resize: none;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(145deg, #6a82fb, #fc5c7d);
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin-bottom: 1rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .result {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cryptage des données</h2>
+    <textarea id="data" rows="4" placeholder="Entrez vos données..."></textarea>
+    <div class="password-container">
+      <input type="password" id="key" placeholder="Clé de cryptage (secrète)">
+      <button class="toggle-password" onclick="togglePassword()">Afficher</button>
+    </div>
+    <button class="btn" onclick="crypter()">Crypter</button>
+    <div class="result" id="resultat"></div>
+  </div>
+
+  <script>
+    function crypter() {
+      const data = document.getElementById("data").value;
+      const key = document.getElementById("key").value;
+
+      if (!data || !key) {
+        alert("Veuillez entrer les données et une clé de cryptage.");
+        return;
+      }
+
+      const encrypted = CryptoJS.AES.encrypt(data, key).toString();
+      document.getElementById("resultat").innerText = encrypted;
+    }
+
+    function togglePassword() {
+      const keyInput = document.getElementById("key");
+      const toggleBtn = document.querySelector(".toggle-password");
+      if (keyInput.type === "password") {
+        keyInput.type = "text";
+        toggleBtn.innerText = "Masquer";
+      } else {
+        keyInput.type = "password";
+        toggleBtn.innerText = "Afficher";
+      }
+    }
+  </script>
+</body>
+</html>

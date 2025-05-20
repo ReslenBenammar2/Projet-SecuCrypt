@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet de Cryptage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+      margin-bottom: 1.5rem;
+    }
+
+    .logo img {
+      max-width: 120px;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(145deg, #6a82fb, #fc5c7d);
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    @media (min-width: 600px) {
+      .btn-group {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      
+      <img src="secucrypt logo.jpg" alt="Logo du projet">
+    </div>
+    <h1>Bienvenue chez Secucrypt</h1>
+    <div class="btn-group">
+      <a href="cryptage.html" class="btn">Crypter des données</a>
+      <a href="decryptage.html" class="btn">Décrypter des données</a>
+    </div>
+  </div>
+</body>
+</html>
