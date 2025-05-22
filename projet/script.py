@@ -15,7 +15,7 @@ html_path = os.path.join(base_path, 'login.html')
 url = f"file:///{html_path}"
 
 # Ouvrir dans le navigateur
-webbrowser.open(url)
+webbrowser.open(url)    
 app = Flask(__name__, static_folder='public')
 CORS(app)
 

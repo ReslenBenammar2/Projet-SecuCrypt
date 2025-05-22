@@ -3,24 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Décrypter des données - Projet de Cryptage</title>
+  <title>Décrypter des données</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
     body {
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      color: white;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-family: 'Inter', sans-serif;
       padding: 2rem;
     }
 
@@ -30,9 +24,9 @@
       border-radius: 24px;
       padding: 3rem;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
       max-width: 600px;
       width: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -41,50 +35,29 @@
       margin-bottom: 1.5rem;
     }
 
-    textarea, input[type="password"], input[type="text"] {
+    textarea, input {
       width: 100%;
       padding: 1rem;
       margin-bottom: 1rem;
       border-radius: 12px;
       border: none;
       background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      color: white;
       font-size: 1rem;
-    }
-
-      textarea {
-      resize: none;
-    }
-
-    .password-container {
-      position: relative;
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      right: 1rem;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      font-size: 0.9rem;
     }
 
     .btn {
-      width: 100%;
       padding: 1rem;
+      width: 100%;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: bold;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      background: linear-gradient(145deg, #6a82fb, #fc5c7d);
+      background: linear-gradient(145deg, #fc5c7d, #6a82fb);
       color: white;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: 0.2s ease;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      margin-bottom: 1rem;
     }
 
     .btn:hover {
@@ -93,10 +66,10 @@
     }
 
     .result {
+      margin-top: 1rem;
       background: rgba(255, 255, 255, 0.1);
       padding: 1rem;
       border-radius: 12px;
-      margin-top: 1rem;
       word-wrap: break-word;
     }
   </style>
@@ -104,44 +77,34 @@
 <body>
   <div class="container">
     <h2>Décryptage des données</h2>
-    <textarea id="data" rows="4" placeholder="Collez ici les données cryptées..."></textarea>
-    <div class="password-container">
-      <input type="password" id="key" placeholder="Clé de cryptage (secrète)">
-      <button class="toggle-password" onclick="togglePassword()">Afficher</button>
-    </div>
+    <textarea id="encryptedData" rows="4" placeholder="Collez ici les données cryptées..."></textarea>
     <button class="btn" onclick="decrypter()">Décrypter</button>
-    <div class="result" id="resultat"></div>
+    <div class="result" id="resultatDecryption"></div>
   </div>
 
   <script>
     function decrypter() {
-      const data = document.getElementById("data").value;
-      const key = document.getElementById("key").value;
+      const encryptedData = document.getElementById("encryptedData").value;
+      const cle = localStorage.getItem("cleDeCryptage");
 
-      if (!data || !key) {
-        alert("Veuillez entrer les données et la clé de décryptage.");
+      if (!encryptedData || !cle) {
+        alert("Données manquantes ou clé introuvable.");
         return;
       }
 
       try {
-        const decrypted = CryptoJS.AES.decrypt(data, key);
-        const texteClair = decrypted.toString(CryptoJS.enc.Utf8);
-        if (!texteClair) throw new Error("Clé invalide ou données corrompues.");
-        document.getElementById("resultat").innerText = texteClair;
-      } catch (e) {
-        document.getElementById("resultat").innerText = "Erreur : impossible de décrypter les données.";
-      }
-    }
+        const bytes = CryptoJS.AES.decrypt(encryptedData, cle);
+        const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
-    function togglePassword() {
-      const keyInput = document.getElementById("key");
-      const toggleBtn = document.querySelector(".toggle-password");
-      if (keyInput.type === "password") {
-        keyInput.type = "text";
-        toggleBtn.innerText = "Masquer";
-      } else {
-        keyInput.type = "password";
-        toggleBtn.innerText = "Afficher";
+        if (!decrypted) {
+          alert("Échec du décryptage. La clé est peut-être incorrecte.");
+          return;
+        }
+
+        document.getElementById("resultatDecryption").innerText = decrypted;
+      } catch (error) {
+        alert("Erreur pendant le décryptage.");
+        console.error(error);
       }
     }
   </script>
